@@ -10,7 +10,7 @@ b:DestroyGui()
 
 c:Button("Kill Aura",function()
     while true do
-        wait() -- outdated timer because I never bothered to really learn much about lua
+        wait(0.1) -- outdated timer because I never bothered to really learn much about lua
         local child = game.Workspace.Monsters:GetChildren() -- We grab the monsters shit
         for i=1, #child do -- we love childrens 
          if (child[i].ClassName == "Model") then -- A simple check if it's a model or not, didn't really take a look at the game with DEX
