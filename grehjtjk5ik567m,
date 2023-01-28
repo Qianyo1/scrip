@@ -1,3 +1,5 @@
+getgenv().killaura = false
+
 local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
 
 local w = library:CreateWindow("Block Defense Alpha") -- Creates the window
@@ -8,17 +10,27 @@ local c = w:CreateFolder("Melee")
 
 b:DestroyGui()
 
-c:Button("Kill Aura",function()
-    while true do
-        wait(0.1) -- outdated timer because I never bothered to really learn much about lua
-        local child = game.Workspace.Monsters:GetChildren() -- We grab the monsters shit
-        for i=1, #child do -- we love childrens 
-         if (child[i].ClassName == "Model") then -- A simple check if it's a model or not, didn't really take a look at the game with DEX
-        game:GetService("ReplicatedStorage").Shared.Melee.Attack:FireServer(child[i]) -- we kill childrens
-         end
-        end
+c:Toggle("Kill Aura",function(bool)
+    getgenv().killaura = bool
+    print("Auto Clik is: ", bool)
+    if bool then
+        Killaura()
+    end
+end)
+
+function Killaura()
+    spawn(function()
+        while wait() do
+            if not killaura then break end
+                local child = game.Workspace.Monsters:GetChildren() -- We grab the monsters shit
+                    for i=1, #child do -- we love childrens 
+                    if (child[i].ClassName == "Model") then -- A simple check if it's a model or not, didn't really take a look at the game with DEX
+                        game:GetService("ReplicatedStorage").Shared.Melee.Attack:FireServer(child[i]) -- we kill childrens
+                 end
+            end
         end
     end)
+end
 
 local selectedGunmod
 b:Dropdown("Gun",{"Pistol","Revolver","Shotgun","Chaingun"},true,function(value)
@@ -34,16 +46,16 @@ end)
 
 function gun(selectedGun)
     if gun then
-            local _name = selectedGun --Name of your gun, names with 2 words write as one, i.e BurstRifle.
-            local a = require(game:GetService("ReplicatedStorage").Shared.Items) --Change any of the values below, names are self explanitory
-            -- Guns
-            a[_name].BulletsPerShot = 30;
-            a[_name].Automatic = false;
-            a[_name].Clip = math.huge; -- This doesnt work, but reloads are short so who cares.
-            a[_name].Crosshair = "Plus"; -- Theres 'Plus' 'X' and 'Circle'
-            a[_name].FireRate = 0.07;
-            a[_name].Spread = 1.25;
-            a[_name].Shake = Vector2.new(0,0) --The recoil, first value is Horizontal, second is Vertical
+        local _name = selectedGun --Name of your gun, names with 2 words write as one, i.e BurstRifle.
+        local a = require(game:GetService("ReplicatedStorage").Shared.Items) --Change any of the values below, names are self explanitory
+        -- Guns
+        a[_name].BulletsPerShot = 30;
+        a[_name].Automatic = false;
+        a[_name].Clip = math.huge; -- This doesnt work, but reloads are short so who cares.
+        a[_name].Crosshair = "Plus"; -- Theres 'Plus' 'X' and 'Circle'
+        a[_name].FireRate = 0.07;
+        a[_name].Spread = 0;
+        a[_name].Shake = Vector2.new(0,0) --The recoil, first value is Horizontal, second is Vertical
     end
 end
 
