@@ -9,7 +9,7 @@ local c = w:CreateFolder("Melee")
 b:DestroyGui()
 
 c:Button("Kill Aura",function()
-    while true do
+    if true then
         wait(0.1) -- outdated timer because I never bothered to really learn much about lua
         local child = game.Workspace.Monsters:GetChildren() -- We grab the monsters shit
         for i=1, #child do -- we love childrens 
